@@ -32,6 +32,7 @@ const InfiniteScroll = (props) => {
         });
     }
     const fetchData = () => {
+        console.log('inside fetching data');
         setLoading(true);
         getData(apiQuery, pageNumber.current)
             .finally(() => {
@@ -39,18 +40,21 @@ const InfiniteScroll = (props) => {
             });
     }
     useEffect(() => {
+        console.log('UseEffect Start');
         const debounceTimer = setTimeout(() => {
+            console.log('Timeout in useeffect');
             fetchData();
         }, 300);
 
         return () => {
+            console.log('inside useeffect return clear timer');
             clearTimeout(debounceTimer);
         }
 
     }, [apiQuery]);
     return (
         <>
-            <div class="grid grid-cols-4 gap-4 p-2 m-2">
+            <div className="grid grid-cols-4 gap-4 p-2 m-2">
                 {renderList()}
             </div>
             {loading && <img src={logo} className="w-52 m-auto" />}

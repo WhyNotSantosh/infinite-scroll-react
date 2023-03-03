@@ -2939,6 +2939,7 @@ const App = ()=>{
     const [data, setData] = (0, _react.useState)([]);
     const handleSearchInput = (e)=>{
         setApiQuery(e.target.value);
+        if (e.target.value.length === 0) setData([]);
     };
     const renderItem = ({ title , key  }, ref)=>{
         return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
@@ -2947,14 +2948,14 @@ const App = ()=>{
             children: title
         }, key + "_" + title, false, {
             fileName: "App.js",
-            lineNumber: 12,
+            lineNumber: 15,
             columnNumber: 16
         }, undefined);
     };
     // Function to fetch the data from api
     const getData = (apiQuery, pageNumber)=>{
         return new Promise(async (resolve, reject)=>{
-            try {
+            if (apiQuery) try {
                 const promise = await fetch("https://openlibrary.org/search.json?" + new URLSearchParams({
                     q: apiQuery,
                     page: pageNumber
@@ -2978,7 +2979,7 @@ const App = ()=>{
                 children: "Welcome to Infinite Scrolling"
             }, void 0, false, {
                 fileName: "App.js",
-                lineNumber: 37,
+                lineNumber: 41,
                 columnNumber: 13
             }, undefined),
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("input", {
@@ -2989,7 +2990,7 @@ const App = ()=>{
                 className: "border-solid border-2 border-black rounded-md m-2"
             }, void 0, false, {
                 fileName: "App.js",
-                lineNumber: 38,
+                lineNumber: 42,
                 columnNumber: 13
             }, undefined),
             apiQuery !== "" && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _infiniteScrollDefault.default), {
@@ -2999,7 +3000,7 @@ const App = ()=>{
                 apiQuery: apiQuery
             }, void 0, false, {
                 fileName: "App.js",
-                lineNumber: 39,
+                lineNumber: 43,
                 columnNumber: 33
             }, undefined)
         ]
@@ -3010,7 +3011,7 @@ _c = App;
 const root = (0, _clientDefault.default).createRoot(document.getElementById("root"));
 root.render(/*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)(App, {}, void 0, false, {
     fileName: "App.js",
-    lineNumber: 50,
+    lineNumber: 54,
     columnNumber: 13
 }, undefined));
 var _c;
@@ -27244,16 +27245,20 @@ const InfiniteScroll = (props)=>{
         });
     };
     const fetchData = ()=>{
+        console.log("inside fetching data");
         setLoading(true);
         getData(apiQuery, pageNumber.current).finally(()=>{
             setLoading(false);
         });
     };
     (0, _react.useEffect)(()=>{
+        console.log("UseEffect Start");
         const debounceTimer = setTimeout(()=>{
+            console.log("Timeout in useeffect");
             fetchData();
         }, 300);
         return ()=>{
+            console.log("inside useeffect return clear timer");
             clearTimeout(debounceTimer);
         };
     }, [
@@ -27262,11 +27267,11 @@ const InfiniteScroll = (props)=>{
     return /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)((0, _jsxDevRuntime.Fragment), {
         children: [
             /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("div", {
-                class: "grid grid-cols-4 gap-4 p-2 m-2",
+                className: "grid grid-cols-4 gap-4 p-2 m-2",
                 children: renderList()
             }, void 0, false, {
                 fileName: "src/component/InfiniteScroll.js",
-                lineNumber: 53,
+                lineNumber: 57,
                 columnNumber: 13
             }, undefined),
             loading && /*#__PURE__*/ (0, _jsxDevRuntime.jsxDEV)("img", {
@@ -27274,7 +27279,7 @@ const InfiniteScroll = (props)=>{
                 className: "w-52 m-auto"
             }, void 0, false, {
                 fileName: "src/component/InfiniteScroll.js",
-                lineNumber: 56,
+                lineNumber: 60,
                 columnNumber: 25
             }, undefined)
         ]
