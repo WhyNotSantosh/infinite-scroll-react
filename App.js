@@ -39,7 +39,7 @@ const App = () => {
     return (
         <>
             <h1 className="m-2 text-gray-800 text-lg font-bold">Welcome to Infinite Scrolling</h1>
-            <input type="text" placeholder="Start typing..." value={apiQuery} onChange={handleSearchInput} className="border-solid border-2 border-black rounded-md m-2" />
+            <input type="text" placeholder=" Start typing..." value={apiQuery} onChange={handleSearchInput} className="border-solid border-2 border-black rounded-md m-2" />
             {apiQuery !== "" && <InfiniteScroll
                 renderListItem={renderItem}
                 getData={getData}
