@@ -5,14 +5,17 @@ import InfiniteScroll from "./src/component/InfiniteScroll";
 const App = () => {
     const [apiQuery, setApiQuery] = useState('');
     const [data, setData] = useState([]);
+    const [noData, setNoData] = useState(false);
     const handleSearchInput = (e) => {
-        setApiQuery(e.target.value)
+        setData([]);
+        setNoData(false);
+        setApiQuery(e.target.value);        
         if (e.target.value.length === 0) {
             setData([]);
         }
     }
     const renderItem = ({ title, key }, ref) => {
-        return <div key={key + "_" + title} ref={ref} className="text-lg text-cyan-800 box-border flex-wrap w-54 p-4 border-4 rounded-md border-orange-300 overflow-x-auto">{title}</div>
+        return <div key={key + "_" + title} ref={ref} className="text-sm text-cyan-800 box-border flex-wrap p-4 border-4 rounded-md border-orange-300 break-words">{title}</div>        
     }
 
     // Function to fetch the data from api
@@ -25,8 +28,11 @@ const App = () => {
                         page: pageNumber
                     }));
                     const data = await promise.json();
-                    resolve();
-                    setData((prevData) => [...prevData, ...data.docs]);
+                    resolve();          
+                    if(data.docs.length === 0){
+                        setNoData(true);
+                    }
+                    setData((prevData) => [...prevData, ...data.docs]);                                                        
                 }
                 catch (err) {
                     console.log('Error fetching data', err);
@@ -45,6 +51,7 @@ const App = () => {
                 getData={getData}
                 listData={data}
                 apiQuery={apiQuery}
+                noData={noData}
             />}
         </>
     )
